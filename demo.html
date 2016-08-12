@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>mini swiper</title>
+    <link rel="stylesheet" href="./light-swiper.css"/>
+    <style>
+     body {
+       margin: 0;
+       padding: 0;
+     }
+    </style>
+  </head>
+  <body>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="http:shejisheng.net:8080/assets/images/mainpage_covers/1462040966.展示1.jpg">
+        </div>
+        <div class="swiper-slide">
+          <img src="http:shejisheng.net:8080/assets/images/mainpage_covers/1461988308.简介1.jpg">
+        </div>
+        <div class="swiper-slide">
+          <img src="http:shejisheng.net:8080/assets/images/mainpage_covers/1464936631.IMG_2615.JPG">
+        </div>
+      </div>
+      <div class="swiper-pagination">
+        <span class="bullet"></span>
+        <span class="bullet"></span>
+        <span class="bullet"></span>
+      </div>
+    </div>
+    <script src="./light-swiper.js"></script>
+    <script>
+      var swiper = new Swiper({
+        target: '.swiper-container',
+        interval: 1000
+      });
+    </script>
+  </body>
+</html>

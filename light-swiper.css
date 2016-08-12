@@ -1,0 +1,46 @@
+/* 图片定高度，宽度居中即可 */
+.swiper-container {
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  /* Fix of Webkit flickering */
+  /*z-index: 1;*/
+}
+.swiper-wrapper {
+  position: relative;
+  z-index: 1;
+  display: -webkit-flex;
+  display: flex;
+  /*可以简写*/
+  -webkit-transition-property: -webkit-transform;
+          transition-property: transform;
+}
+.swiper-slide {
+  position: relative;
+  width: 100%;
+}
+.swiper-slide img {
+  width: 100%;
+}
+.swiper-pagination {
+  position: absolute;
+  z-index: 2;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.swiper-pagination .bullet {
+  width: 8px;
+  height: 8px;
+  margin: 0 5px;
+  display: inline-block;
+  border-radius: 100%;
+  background: #000;
+  opacity: .2;
+}
+
+.swiper-pagination .bullet-active {
+  background: #007aff;
+  opacity: 1;
+}
