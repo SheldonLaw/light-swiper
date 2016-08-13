@@ -1,10 +1,8 @@
-/* 图片定高度，宽度居中即可 */
 .swiper-container {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
-  /* Fix of Webkit flickering */
-  /*z-index: 1;*/
+  width: 100%;
 }
 .swiper-wrapper {
   position: relative;

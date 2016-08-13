@@ -10,6 +10,9 @@ var Swiper = function (conf) {
   this.init(conf);
 };
 
+var cur_index = 1;
+var timer = null;
+
 Swiper.prototype.init = function (conf) {
   var defaults = {
     interval: 5000
@@ -21,17 +24,18 @@ Swiper.prototype.init = function (conf) {
   var indicators = document.querySelectorAll(conf.target + " .swiper-pagination .bullet");
   var sliders = container.children;
   var sliders_length = sliders.length;
+
   //视图初始化
+  cur_index = 1;
   var first_clone = sliders[0].cloneNode(true);
   var last_clone = sliders[sliders_length-1].cloneNode(true);
   container.insertBefore(last_clone, container.firstElementChild);
   container.appendChild(first_clone);
   container.style.width = (sliders_length + 2) * 100 + "%";
-  var cur_index = 1;
   container.style.transform = getPosition(cur_index, sliders_length);
   indicators[0].className = "bullet bullet-active";
   //开始轮播
-  var timer = setInterval(function() {
+  timer = setInterval(function() {
     cur_index = getIndex(cur_index, sliders_length);
     transition(container, indicators, cur_index, sliders_length);
   }, defaults.interval);
@@ -42,7 +46,6 @@ Swiper.prototype.init = function (conf) {
   var touchstart = 0, touchend = 0;
   container.addEventListener('touchstart', function(event) {
     if (event.targetTouches.length == 1) {    //单点触碰有效
-      event.preventDefault();
       //暂停轮播
       clearInterval(timer);
       var touch = event.targetTouches[0];
@@ -51,7 +54,9 @@ Swiper.prototype.init = function (conf) {
     }
   });
   container.addEventListener('touchend', function(event) {
+    if (touchend === 0) return; //避免单击跳转
     var offset = touchend - touchstart;
+    touchend = 0;
     if (Math.abs(offset) < 45) {
       //间距太小，归位
       transition(container, indicators, cur_index, sliders_length);
@@ -84,6 +89,10 @@ Swiper.prototype.init = function (conf) {
   });
 };
 
+Swiper.prototype.stop = function () {
+  clearInterval(timer);
+};
+
 //进行动画处理
 function transition(container, indicators, index, count) {
   //处理图片
@@ -94,20 +103,27 @@ function transition(container, indicators, index, count) {
     setTimeout(  function() {
       container.style['transition-duration'] = "0s";
       container.style.transform = getPosition(1, count);
+      cur_index = 1;
     }, 300 );
   } else if (index === 0) {
     setTimeout(  function() {
       container.style['transition-duration'] = "0s";
       container.style.transform = getPosition(count, count);
+      cur_index = count;
     }, 300 );
   }
   //------------------------------------------------------------------
   //处理指示点
   var indicator_index = (index + count - 1) % count;
-  console.log(indicator_index);
+  for(var i=0; i<indicators.length; i++) {
+    var x = indicators[i];
+    x.className = indicator_index == i ? "bullet bullet-active" : "bullet";
+  }
+  /* Safari：dom节点数组没有forEach这个方法
   indicators.forEach( function(x,i) {
     x.className = indicator_index == i ? "bullet bullet-active" : "bullet";
   } );
+  */
 }
 
 //获取容器的位置
